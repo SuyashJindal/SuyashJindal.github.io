@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suyash Jindal | Interactive Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-section {
+            text-align: center;
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-img-placeholder {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .sidebar h1 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar .tagline {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: transform 0.6s ease;
+            transform: rotate(45deg) translate(-100%, -100%);
+        }
+
+        .project-card:hover::before {
+            transform: rotate(45deg) translate(100%, 100%);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Blog Section */
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .blog-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .blog-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .blog-card a:hover {
+            color: #764ba2;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-item h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .skill-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .skill-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 100%;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .menu-toggle:hover {
+                background: white;
+                transform: scale(1.1);
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-top: 2rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="profile-section">
+                <img src="your-photo.png" alt="Suyash Jindal" class="profile-img" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="profile-img profile-img-placeholder" style="display: none;">SJ</div>
+                <h1>Suyash Jindal</h1>
+                <p class="tagline">Statistics & Data Science | Quantitative Finance | Researcher</p>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link active" onclick="showSection('about', this)">About Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#projects" class="nav-link" onclick="showSection('projects', this)">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#skills" class="nav-link" onclick="showSection('skills', this)">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#blogs" class="nav-link" onclick="showSection('blogs', this)">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link" onclick="showSection('contact', this)">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="about" class="content-section active">
+                <h2>About Me</h2>
+                <p>
+                    I am a passionate student at IIT Kanpur, deeply immersed in the world of algorithms, machine learning, and cutting-edge research. My journey spans across multiple domains including financial modeling, autonomous trading systems, quantum simulations, and advanced statistical learning methods.
+                </p>
+                <p>
+                    With expertise in C++, Python, Go, and MATLAB, I bridge the gap between theoretical concepts and practical implementations. My work encompasses everything from high-frequency trading bots to density functional theory simulations, and from backend microservices to competitive programming tools, always pushing the boundaries of what's possible with code.
+                </p>
+                <p>
+                    When I'm not diving deep into research, you'll find me tackling challenging algorithmic problems on platforms like LeetCode, Codeforces, and CodeChef, constantly sharpening my problem-solving skills and staying at the forefront of competitive programming.
+                </p>
+            </section>
+
+            <section id="projects" class="content-section">
+                <h2>Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>🤖 Market-Making Bot</h3>
+                        <p>High-frequency trading system implemented in C++, integrating Zerodha API for real-time market data and automated trading strategies. Features advanced risk management and latency optimization.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>📊 IV Surface Modeling</h3>
+                        <p>Comprehensive volatility surface modeling using SABR, Heston, and SSVI models. Calibrated using Bank NIFTY options data with advanced optimization techniques for accurate pricing.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>⚛️ DFT Simulations</h3>
+                        <p>Quantum mechanical simulations for band gap engineering in Fe-doped TiO2 using VASP. Explored electronic properties and optimized material characteristics for photocatalytic applications.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>🔮 DUT1 Prediction</h3>
+                        <p>Time series forecasting model for Earth rotation parameters using Gradient Boosting Machines, Temporal Convolutional Networks, and LSTM architectures with horizon-specific optimization.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>⚡ CF Stress</h3>
+                        <p>Community-driven, highly customizable, no-code tool to stress test Codeforces problems. Built with Go, MongoDB, Docker, and Postman integration. Features advanced concurrency handling and DataDog monitoring for performance optimization.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="content-section">
+                <h2>Technical Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-item">
+                        <h3>Programming</h3>
+                        <p>C++, Python, MATLAB</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>Machine Learning</h3>
+                        <p>TensorFlow, PyTorch, Scikit-learn</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>Finance</h3>
+                        <p>Quantitative Modeling, Risk Management</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>Data Science</h3>
+                        <p>Statistical Analysis, Time Series</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>Computational Physics</h3>
+                        <p>VASP, DFT, Quantum Simulations</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>Algorithms</h3>
+                        <p>Competitive Programming, Optimization</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>Backend Development</h3>
+                        <p>Go, MongoDB, Docker, REST APIs</p>
+                    </div>
+                    <div class="skill-item">
+                        <h3>DevOps & Monitoring</h3>
+                        <p>DataDog, Postman, Concurrency</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="blogs" class="content-section">
+                <h2>Research & Insights</h2>
+                <div class="blog-card">
+                    <h3>Building a Market-Making Strategy</h3>
+                    <p>Deep dive into the mathematical foundations and implementation details of high-frequency trading algorithms. Exploring market microstructure, optimal bid-ask spread calculation, and risk management techniques.</p>
+                    <a href="https://github.com/suyashjindal" target="_blank">Read More →</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Volatility Surface Fitting: SABR vs. Heston vs. SSVI</h3>
+                    <p>Comprehensive comparison of popular volatility models in derivatives pricing. Analysis of fitting accuracy, computational efficiency, and practical implementation considerations for each model.</p>
+                    <a href="https://github.com/suyashjindal" target="_blank">Read More →</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Quantum Computing in Financial Modeling</h3>
+                    <p>Exploring the intersection of quantum algorithms and financial mathematics. Investigating potential applications in portfolio optimization, risk assessment, and option pricing models.</p>
+                    <a href="https://github.com/suyashjindal" target="_blank">Read More →</a>
+                </div>
+                <div class="blog-card">
+                    <h3>Building Scalable Backend Systems with Go</h3>
+                    <p>Deep dive into Go programming for high-performance backend development. Covering concurrency patterns, microservices architecture, and real-world deployment strategies used in CF Stress development.</p>
+                    <a href="https://github.com/suyashjindal" target="_blank">Read More →</a>
+                </div>
+            </section>
+
+            <section id="contact" class="content-section">
+                <h2>Let's Connect</h2>
+                <p>I'm always excited to discuss new opportunities, collaborate on interesting projects, or simply chat about technology and research. Feel free to reach out!</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📧 Email</h3>
+                        <a href="mailto:suysyashj22@iitk.ac.in">suysyashj22@iitk.ac.in</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>💼 LinkedIn</h3>
+                        <a href="https://www.linkedin.com/in/suyash-jindal-085a4b258/" target="_blank">Connect with me</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>🐙 GitHub</h3>
+                        <a href="https://github.com/suyashjindal" target="_blank">View my projects</a>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2025 Suyash Jindal. Built with passion and precision.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        function showSection(sectionId, clickedLink) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked link
+            clickedLink.classList.add('active');
+            
+            // Close sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('active');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Add smooth scrolling and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to project cards
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add loading animation
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.addEventListener('animationend', function() {
+                    this.style.animation = 'none';
+                });
+            });
+
+            // Add typing effect to tagline
+            const tagline = document.querySelector('.tagline');
+            const text = tagline.textContent;
+            tagline.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    tagline.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !menuToggle.contains(event.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

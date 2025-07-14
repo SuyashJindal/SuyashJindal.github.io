@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suyash Jindal | Blog Articles</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 40px;
+      text-align: center;
+      color: white;
+    }
+    nav {
+      text-align: center;
+      margin-top: 15px;
+    }
+    nav a {
+      display: inline-block;
+      text-decoration: none;
+      background: #fff;
+      color: #667eea;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 25px;
+      font-weight: 600;
+      border: 2px solid #667eea;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      background: #667eea;
+      color: white;
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    article {
+      margin-bottom: 60px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    h3 {
+      color: #667eea;
+    }
+    p {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Suyash Jindal's Blog</h1>
+    <p>Quantitative Finance | Machine Learning | Strategy Research</p>
+    <nav>
+      <a href="index.html">← Back to Portfolio</a>
+    </nav>
+  </header>
+  <main>
+    <article>
+      <h2>Portfolio Optimization & Risk Modeling</h2>
+      <p>
+        Developed a comprehensive portfolio optimization system by implementing methodologies from academic research papers,
+        integrating Hierarchical Risk Parity (HRP) and Hierarchical Clustering (HC) to leverage historical market structures.
+        Incorporated investor views using the Fama-French 3-Factor Model and Black-Litterman Model, combining data-driven insights
+        with forward-looking market expectations.
+      </p>
+      <p>
+        Integrated Bayesian analysis, Markov Chains, and regime-switching models to dynamically adjust portfolios under varying
+        market conditions, including periods like the COVID-19 pandemic and recessions. Built and trained sophisticated machine
+        learning models for stock selection, combining sentiment analysis, fundamental ratios, and technical indicators to rank
+        and select high-performing securities.
+      </p>
+      <p>
+        Extended the framework to handle multi-asset portfolios, including equities, ETFs, indices, gold and bonds. The model
+        demonstrates robust performance and consistently outperforms the NIFTY 50 and S&P 500 benchmarks across various asset
+        combinations and time intervals.
+      </p>
+    </article>
+
+    <article>
+      <h2>Advanced Trading Strategies in ETFs & Options</h2>
+      <p>
+        Executed a series of advanced financial research projects focused on strategy development across equity, ETF, index,
+        and derivatives markets, integrating both statistical and technical analysis.
+      </p>
+      <p>
+        Designed an ETF trading strategy by analyzing and exploiting correlation patterns with the S&P 500 index, identifying
+        relative value opportunities for alpha generation. Developed and backtested options trading strategies, including
+        Long/Short Strangle, Straddle, and Butterfly spreads, optimizing for volatility and directional movement scenarios.
+      </p>
+      <p>
+        Engineered market diagnostic tools such as Relative Rotation Graphs (RRGs), Volatility Smile Curves, Correlation
+        Matrices, and Sector Return Matrices to enhance macro and sector-level decision-making. Constructed Forward Implied
+        volatility (FIV)-based option strategies, leveraging predictive volatility modeling to design high-conviction directional
+        and non-directional trades.
+      </p>
+    </article>
+  </main>
+</body>
+</html>
